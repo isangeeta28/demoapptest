@@ -90,7 +90,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     );
   }
 
-  void postImage(String uid, String username, String profImage) async {
+  void postImage({required String datauid, required String datausername, required String dataphotourl}) async {
     setState(() {
       isLoading = true;
     });
@@ -100,9 +100,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
       String res = await FireStoreMethods().uploadPost(
         _descriptionController.text,
         _file!,
-        uid,
-        username,
-        profImage,
+        datauid,
+        datausername,
+        dataphotourl,
       );
       if (res == "success") {
         setState(() {
@@ -171,9 +171,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
               actions: <Widget>[
                 IconButton(
                   onPressed: () => postImage(
-                    userDetails?.id??"",
-                    userDetails?.nickname??"",
-                    userDetails?.photoUrl??"",
+                    datauid: userDetails?.id??"",
+                    datausername : userDetails?.nickname??"",
+                    dataphotourl :userDetails?.photoUrl??"",
                   ),
                   icon: Icon(Icons.check,
                   color: Colors.black,

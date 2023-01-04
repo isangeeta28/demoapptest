@@ -4,11 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../constants/firestore_constants.dart';
 
 class UserChat{
-  String id;
-  String photoUrl;
-  String nickname;
-  final String email;
-  final String uid;
+  final String id;
+  final String photoUrl;
+  final String nickname;
+  //final String email;
   final String username;
   final String bio;
   final List followers;
@@ -20,8 +19,7 @@ class UserChat{
     required this.nickname,
     required this.id,
     required this.username,
-    required this.uid,
-    required this.email,
+    //required this.email,
     required this.bio,
     required this.followers,
     required this.following
@@ -40,8 +38,7 @@ class UserChat{
     photoUrl: json["photoUrl"],
     nickname: json["nickname"],
     username: json["username"],
-    uid: json["uid"],
-    email: json["email"],
+    //email: json["email"],
     bio: json["bio"],
     followers: json["followers"],
     following: json["following"],
@@ -51,20 +48,20 @@ class UserChat{
     String aboutMe = "";
     String photoUrl = "";
     String nickname = "";
-    String phoneNumber = "";
+    //String phoneNumber = "";
     String username = "";
     String uid= '';
-    String email= '';
+    //String email= '';
     String bio= '';
 
     try{
       aboutMe = doc.get(FirestoreConstants.aboutMe);
     }catch(e){}
     try{
-      aboutMe = doc.get(FirestoreConstants.photoUrl);
+      photoUrl = doc.get(FirestoreConstants.photoUrl);
     }catch(e){}
     try{
-      aboutMe = doc.get(FirestoreConstants.nickname);
+      nickname = doc.get(FirestoreConstants.nickname);
     }catch(e){}
     try{
       aboutMe = doc.get(FirestoreConstants.phoneNumber);
@@ -74,8 +71,7 @@ class UserChat{
       photoUrl: photoUrl,
       nickname: nickname,
       username: username,
-      uid: uid,
-      email: email,
+      //email: email,
       bio: bio,
       followers: [],
       following: [],

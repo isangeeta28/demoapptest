@@ -38,16 +38,6 @@ class AuthProvider extends ChangeNotifier{
     return prefs.getString(FirestoreConstants.id);
   }
 
-  // get user details
-  Future<model.Users> getUserDetails() async {
-    User currentUser = FirebaseAuth.instance.currentUser!;
-
-    DocumentSnapshot documentSnapshot =
-    await firabaseFirestore.collection('users').doc(currentUser.uid).get();
-
-    return model.Users.fromSnap(documentSnapshot);
-  }
-
   Future<bool> isLoggedIn()async{
     bool isLoggedIn = await googleSignIn.isSignedIn();
     if(isLoggedIn && prefs.getString(FirestoreConstants.id)?.isNotEmpty == true){
@@ -81,6 +71,7 @@ class AuthProvider extends ChangeNotifier{
             FirestoreConstants.nickname: firebaseUser.displayName,
             FirestoreConstants.photoUrl: firebaseUser.photoURL,
             FirestoreConstants.phoneNumber: firebaseUser.phoneNumber,
+            FirestoreConstants.id : firebaseUser.uid,
             FirestoreConstants.email: firebaseUser.email,
             'createdAt': DateTime.now().microsecondsSinceEpoch.toString(),
             FirestoreConstants.chattingWith: null
@@ -113,6 +104,13 @@ class AuthProvider extends ChangeNotifier{
       return false;
      }
     }
+
+  // get user details
+  Future<model.Users> getUserDetails() async {
+    User currentUser = FirebaseAuth.instance.currentUser!;
+    DocumentSnapshot documentSnapshot = await firabaseFirestore.collection('users').doc(currentUser.uid).get();
+    return model.Users.fromSnap(documentSnapshot);
+  }
 
 
     Future<void> handleSignOut() async{
