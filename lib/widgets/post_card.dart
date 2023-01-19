@@ -217,7 +217,7 @@ class _PostCardState extends State<PostCard> {
               alignment: Alignment.center,
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.35,
+                  height: MediaQuery.of(context).size.height * 0.5,
                   width: double.infinity,
                   child: Image.network(
                     widget.snap['postUrl'].toString(),
@@ -274,13 +274,16 @@ class _PostCardState extends State<PostCard> {
                   Icons.comment_outlined,
                 ),
                 onPressed: () {
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) => CommentsScreen(
-                  //       postId: widget.snap['postId'].toString(),
-                  //     ),
-                  //   ),
-                  // );
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => CommentsScreen(
+                        image: widget.snap['profImage'].toString(),
+                        postId: widget.snap['postId'].toString(),
+                        detail: userDetails?.photoUrl,
+                        uid:userDetails?.id
+                      ),
+                    ),
+                  );
                 }
               ),
               IconButton(
@@ -346,13 +349,14 @@ class _PostCardState extends State<PostCard> {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                   ),
                   onTap: () {
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (context) => CommentsScreen(
-                    //       postId: widget.snap['postId'].toString(),
-                    //     ),
-                    //   ),
-                    // );
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => CommentsScreen(
+                          image: widget.snap['profImage'].toString(),
+                          postId: widget.snap['postId'].toString(),
+                        ),
+                      ),
+                    );
                   }
                 ),
                 Container(

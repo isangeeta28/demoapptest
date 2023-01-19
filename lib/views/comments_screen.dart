@@ -12,16 +12,16 @@ import '../widgets/comment_card.dart';
 
 class CommentsScreen extends StatefulWidget {
   final postId;
-  const CommentsScreen({Key? key, required this.postId}) : super(key: key);
+  final image;
+  final detail;
+  final uid;
+  const CommentsScreen({Key? key, required this.postId, this.image, this.detail,this.uid}) : super(key: key);
 
   @override
   _CommentsScreenState createState() => _CommentsScreenState();
 }
 
 class _CommentsScreenState extends State<CommentsScreen> {
-  final TextEditingController commentEditingController =
-  TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -33,6 +33,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
     AuthProvider authProvider = context.read<AuthProvider>();
     userDetails = await authProvider.getUserDetails();
   }
+  final TextEditingController commentEditingController = TextEditingController();
+  final TextEditingController replyEditingController = TextEditingController();
 
   void postComment(String uid, String name, String profilePic) async {
     try {
@@ -73,7 +75,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
         stream: FirebaseFirestore.instance
             .collection('posts')
             .doc(widget.postId)
-            .collection('comments')
+            .collection('comments').orderBy("datePublished",descending: true)
             .snapshots(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
@@ -87,6 +89,9 @@ class _CommentsScreenState extends State<CommentsScreen> {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (ctx, index) => CommentCard(
               snap: snapshot.data!.docs[index],
+              uid: widget.uid,
+              postId: widget.postId,
+              image: widget.detail??""
             ),
           );
         },
@@ -101,27 +106,40 @@ class _CommentsScreenState extends State<CommentsScreen> {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage(userDetails?.photoUrl??""),
+                backgroundImage: NetworkImage(
+                  widget.detail??""
+                  //widget.image??""
+                  //userDetails?.photoUrl??"",
+                ),
                 radius: 18,
               ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16, right: 8),
                   child: TextField(
+                    //controller: replyEditingController,
                     controller: commentEditingController,
                     decoration: InputDecoration(
-                      hintText: 'Comment as ${userDetails?.nickname}',
+                      hintText: 'Add a comment',
+                       //   'as ${userDetails?.nickname}',
                       border: InputBorder.none,
                     ),
                   ),
                 ),
               ),
               InkWell(
-                onTap: () => postComment(
+                onTap: () =>
+                    postComment(
                   userDetails?.id??"",
                   userDetails?.nickname??"",
                   userDetails?.photoUrl??"",
                 ),
+                // postCommentrelpy(
+                //   userDetails?.id??"",
+                //   userDetails?.nickname??"",
+                //   userDetails?.photoUrl??"",
+                //   userDetails?.id??"",
+                // ),
                 child: Container(
                   padding:
                   const EdgeInsets.symmetric(vertical: 8, horizontal: 8),

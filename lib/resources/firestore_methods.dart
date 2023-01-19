@@ -86,6 +86,40 @@ class FireStoreMethods {
     return res;
   }
 
+
+  //for Reply on comment
+  Future<String> postCommentreply(String postId, String text, String uid,
+      String name, String profilePic,String commentId,) async {
+    String res = "Some error occurred";
+    try {
+      if (text.isNotEmpty) {
+        // if the likes list contains the user uid, we need to remove it
+        String relpyId = const Uuid().v1();
+        _firestore
+            .collection('posts')
+            .doc(postId)
+            .collection('comments')
+            .doc(commentId)
+            .collection("reply")
+            .doc(relpyId)
+            .set({
+          'profilePic': profilePic,
+          'name': name,
+          'uid': uid,
+          'text': text,
+          'replyId': relpyId,
+          'datePublished': DateTime.now(),
+        });
+        res = 'success';
+      } else {
+        res = "Please enter text";
+      }
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
   // Delete Post
   Future<String> deletePost(String postId) async {
     String res = "Some error occurred";
