@@ -29,7 +29,7 @@ class Post {
       uid: snapshot["uid"],
       likes: snapshot["likes"],
       postId: snapshot["postId"],
-      datePublished: snapshot["datePublished"],
+      datePublished: (snapshot["datePublished"] as Timestamp).toDate(),
       username: snapshot["username"],
       postUrl: snapshot['postUrl'],
       profImage: snapshot['profImage']

@@ -1,7 +1,6 @@
 import 'package:demoprojectapp/views/addpostscreen.dart';
 import 'package:demoprojectapp/views/feed_screen.dart';
 import 'package:demoprojectapp/views/profile_screen.dart';
-import 'package:demoprojectapp/views/search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   List<Widget> homeScreenItems = [
     const FeedScreen(),
-    const SearchScreen(),
     const AddPostScreen(),
     const Text('notifications'),
     ProfileScreen(
@@ -68,22 +66,15 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.search,
-                color: (_page == 1) ? Colors.black : Colors.grey,
-              ),
-              label: '',
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-              icon: Icon(
                 Icons.add_circle,
-                color: (_page == 2) ? Colors.black : Colors.grey,
+                color: (_page == 1) ? Colors.black : Colors.grey,
               ),
               label: '',
               backgroundColor: Colors.white),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.favorite,
-              color: (_page == 3) ? Colors.black : Colors.grey,
+              color: (_page == 2) ? Colors.black : Colors.grey,
             ),
             label: '',
             backgroundColor: Colors.white,
@@ -91,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person,
-              color: (_page == 4) ? Colors.black : Colors.grey,
+              color: (_page == 3) ? Colors.black : Colors.grey,
             ),
             label: '',
             backgroundColor: Colors.white,

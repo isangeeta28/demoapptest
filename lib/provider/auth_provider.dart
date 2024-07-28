@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/firestore_constants.dart';
+import '../model/post.dart';
 import '../model/user_chat.dart';
 import 'package:demoprojectapp/model/users.dart' as model;
 
@@ -112,6 +113,13 @@ class AuthProvider extends ChangeNotifier{
     return model.Users.fromSnap(documentSnapshot);
   }
 
+  Future<List<Post>> getUserPosts(String userId) async {
+    QuerySnapshot snapshot = await firabaseFirestore
+        .collection('posts')
+        .where('uid', isEqualTo: userId)
+        .get();
+    return snapshot.docs.map((doc) => Post.fromSnap(doc)).toList();
+  }
 
     Future<void> handleSignOut() async{
     _status = Status.uninitialized;

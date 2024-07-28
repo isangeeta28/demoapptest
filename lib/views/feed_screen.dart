@@ -67,25 +67,29 @@ class _FeedScreenState extends State<FeedScreen> {
           stream: FirebaseFirestore.instance.
           collection('posts').orderBy("datePublished",descending: true).
           snapshots(),
-          builder: (context,
-              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
-            return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (ctx, index) => Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 0.3 ,
-                  vertical: 10 ,
+            if(snapshot.data?.size != 0) {
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (ctx, index) => Container(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 0.3 ,
+                    vertical: 10 ,
+                  ),
+                  child: PostCard(
+                    snap: snapshot.data!.docs[index].data(),
+                  ),
                 ),
-                child: PostCard(
-                  snap: snapshot.data!.docs[index].data(),
-                ),
-              ),
-            );
+              );
+            }else{
+              return Center(child: Text("No data to display"));
+            }
+
           },
         ),
       ),

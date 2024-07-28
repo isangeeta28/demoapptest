@@ -141,12 +141,28 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // AuthProvider authProvider = context.read<AuthProvider>();
-    // var userDetails = await authProvider.getUserDetails();
-    // final UserProvider userProvider = Provider.of<UserProvider>(context);
 
     return _file == null
-        ? Center(
+        ? Container(
+      decoration: BoxDecoration(
+         // borderRadius: BorderRadius.circular(10),
+          gradient: LinearGradient(begin: Alignment.bottomRight, stops: [
+            0.5,
+            0.9
+          ], colors: [
+            Colors.pinkAccent.shade200,
+            Colors.blue.shade200
+          ])),
+          child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+          Text("Add Post",
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.w800
+            ),),
+          Center(
             child: IconButton(
               icon: const Icon(
                 Icons.upload,
@@ -154,6 +170,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
               onPressed: () => _selectImage(context),
             ),
           )
+                ],
+              ),
+        )
         : Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.white,
@@ -192,11 +211,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    // CircleAvatar(
-                    //   backgroundImage: NetworkImage(
-                    //     userDetails?.photoUrl??"",
-                    //   ),
-                    // ),
                     SizedBox(
                       height: 50.0,
                       width: 50.0,
